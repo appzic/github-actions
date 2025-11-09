@@ -1,0 +1,28 @@
+# Project: Appzic GitHub Actions
+# Author: R. M. Yashitha Nadeeshan
+# License: MIT
+# Company: Appzic
+# Created: 2025/11/09
+# Description: GitHub Action to send messages via Telegram bot
+
+name: "Telegram Send Message"
+description: "Sends a message to a Telegram chat using a bot."
+inputs:
+  token:
+    description: "Telegram bot token"
+    required: true
+  chat_id:
+    description: "Telegram chat ID"
+    required: true
+  message:
+    description: "The message to send"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Send Telegram Message
+      shell: bash
+      run: |
+        curl -X POST "https://api.telegram.org/bot${{ inputs.token }}/sendMessage" \
+        -d "chat_id=${{ inputs.chat_id }}" \
+        -d "text=${{ inputs.message }}"
